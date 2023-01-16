@@ -5,7 +5,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const ul = document.querySelector("ul");
 
-  let url=`https://pokeapi.co/api/v2/pokemon`;
+  let url=`https://pokeapi.co/api/v2/pokemon?limit=10`;
 
   
   function checkStatus(respone) {
@@ -21,39 +21,20 @@ window.addEventListener("DOMContentLoaded", () => {
     return respone.json();
   }
 
+
   fetch(url)
     .then(checkStatus)
     .then(toJSON)
-    .then(data=> {
-      for(let count=0; count<10; count++) {
-        console.log(count)
-        let newLi=document.createElement('li'+count);
-        newLi.innerHTML=data.results[count].name+'</br>';
-        ul.appendChild(newLi);
-      }
+    .then(data=> { 
+        console.log(data.results);
+        data.results.forEach(result=>{
+          let newLi=document.createElement('li');
+          newLi.innerHTML=result.name;
+          ul.appendChild(newLi);
+        })
     })
 
 
-
-  /*
-
-  fetch('')
-    .then((res) => {console.log(res);res.json()})
-    .then((data) => {
-        data = data.filter(entry => entry.created > someValue) // Created after X
-                   .slice(0, 10);                            // Limit to 1000
-        // ...use data...
-        console.log(data)
-        for(let count=1; count<=10;count++) {
-        let newli=document.createElement('li'+count);
-        console.log('kur');
-        newli.innerHTML="kur";
-        ul.appendChild(newli);
-        }
-    })
-    .catch(error => {        // <=== Don't forget to handle errors
-        // Handle error...
-    });*/
 });
 
 /*Import the project from https://gitlab.com/boomdotdev/tasks/task-85
